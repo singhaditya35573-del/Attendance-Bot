@@ -13,6 +13,21 @@ from telegram.ext import (
 
 BOT_TOKEN = os.getenv("BOT_TOKEN")
 DB_NAME = "attendiq.db"
+import threading
+from http.server import HTTPServer, BaseHTTPRequestHandler
+
+def run_dummy_server():
+    port = int(os.environ.get("PORT", 8080))
+    class DummyHandler(BaseHTTPRequestHandler):
+        def do_GET(self):
+            self.send_response(200)
+            self.end_headers()
+            self.wfile.write(b"Bot is alive!")
+        def log_message(self, format, *args):
+            return
+
+    server = HTTPServer(("0.0.0.0", port), DummyHandler)
+    server.serve_forever()
 
 # ----------------------------------------------------
 # Database Management
@@ -267,4 +282,5 @@ if __name__ == "__main__":
     app.add_handler(CallbackQueryHandler(button_handler, pattern="^btn_"))
 
     print("Attendance Bot is running... (Press Ctrl+C to stop)")
+    threading.Thread(target=run_dummy_server, daemon=True).start()
     app.run_polling()
