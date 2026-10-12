@@ -1,0 +1,4 @@
+﻿venv/
+attendiq.db
+*.db
+__pycache__/
