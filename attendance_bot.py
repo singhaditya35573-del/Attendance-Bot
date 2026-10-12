@@ -1,5 +1,8 @@
+import os
 import sqlite3
 import math
+import datetime
+from zoneinfo import ZoneInfo
 from telegram import Update, InlineKeyboardButton, InlineKeyboardMarkup
 from telegram.ext import (
     ApplicationBuilder,
@@ -8,7 +11,7 @@ from telegram.ext import (
     ContextTypes,
 )
 
-BOT_TOKEN = "8852155871:AAFQMgJEIaBfyiwJH5_4LfYG4TekpeE3IBs"
+BOT_TOKEN = os.getenv("BOT_TOKEN")
 DB_NAME = "attendiq.db"
 
 # ----------------------------------------------------
